@@ -4,9 +4,9 @@ Deploys al scrum team tools in a single instance.
 The team need this essential tools:
 * git
 * chat
-* jenkins
-* sonar
-* nexus
+* automatization
+* quality
+* artifact repository
 * project management
 
 All those tools must have a Open Source license.
