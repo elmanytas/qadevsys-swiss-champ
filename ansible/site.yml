@@ -1,0 +1,35 @@
+- hosts: all
+  gather_facts: True
+
+- hosts: sonarqube
+  roles:
+  - docker-app-server
+  - sonarqube
+  tags:
+  - sonarqube
+
+#- hosts: nexus
+#  roles:
+#  - docker-app-server
+#  - nexus
+#  tags:
+#  - nexus
+
+#- hosts: jenkins
+#  roles:
+#  - jenkins
+#  tags:
+#  - jenkins
+
+#- hosts: gitlab
+#  roles:
+#  - gitlab
+#  tags:
+#  - gitlab
+
+#- hosts: taiga
+#  - docker-app-server
+#  roles:
+#  - taiga
+#  tags:
+#  - taiga
