@@ -1,10 +1,10 @@
 - name: Create directories to attach docker volumes
   file: path=/var/lib/sonarqube/{{ item }} state=directory mode=0777 owner=root group=root
   with_items:
-  - postgresql
-  - conf
-  - plugins
-  - extensions
+    - postgresql
+    - conf
+    - plugins
+    - extensions
 
 - name: Start postgresql
   docker:
@@ -14,13 +14,15 @@
     restart_policy: always
     expose: 5432
     volumes:
-    - /var/lib/sonarqube/postgresql:/var/lib/postgresql/data
+      - /var/lib/sonarqube/postgresql:/var/lib/postgresql/data
     env:
       POSTGRES_PASSWORD: sonarqube
       POSTGRES_USER: sonarqube
 
 - name: Configure sonar context
   copy: src=sonar.properties dest=/var/lib/sonarqube/conf/sonar.properties mode=0644 owner=root group=root
+  notify:
+    - restart docker
 
 - name: Start dockerized sonarqube
   docker:
@@ -31,11 +33,11 @@
     ports: "127.0.0.1:9000:9000"
     expose: 9000
     volumes:
-    - /var/lib/sonarqube/conf:/opt/sonarqube/conf
-    - /var/lib/sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
-    - /var/lib/sonarqube/extensions:/opt/sonarqube/extensions
+      - /var/lib/sonarqube/conf:/opt/sonarqube/conf
+      - /var/lib/sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
+      - /var/lib/sonarqube/extensions:/opt/sonarqube/extensions
     links:
-    - postgresql:postgresql
+      - postgresql:postgresql
     env:
       SONARQUBE_JDBC_USERNAME: sonarqube
       SONARQUBE_JDBC_PASSWORD: sonarqube
@@ -49,7 +51,7 @@
 - name: Configure httpd as proxy to nexus
   copy: src=sonarqube.conf dest=/etc/httpd/conf.d/sonarqube.conf mode=0644 owner=root group=root
   notify:
-  - restart httpd
+    - restart httpd
 
 - name: Enable and start httpd
   service: name=httpd enabled=true state=started
