@@ -19,6 +19,8 @@
       POSTGRES_PASSWORD: sonarqube
       POSTGRES_USER: sonarqube
 
+- name: Configure sonar context
+  copy: src=sonar.properties dest=/var/lib/sonarqube/conf/sonar.properties mode=0644 owner=root group=root
 
 - name: Start dockerized sonarqube
   docker:
