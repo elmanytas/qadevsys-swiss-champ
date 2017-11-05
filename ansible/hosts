@@ -19,6 +19,7 @@ ansible_become_user=root
 
 
 [jenkins]
+192.168.42.190
 
 [jenkins:vars]
 ansible_user=centos

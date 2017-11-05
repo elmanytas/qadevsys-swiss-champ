@@ -1,0 +1,33 @@
+- name: Create directories to attach docker volumes
+  file: path=/var/lib/jenkins/jenkins_home state=directory mode=0777 owner=root group=root
+
+- name: Start jenkins
+  docker:
+    name: jenkins
+    image: jenkins
+    state: started
+    restart_policy: always
+    ports: "127.0.0.1:8080:8080"
+    expose: 8080
+    volumes:
+      - /var/lib/jenkins/jenkins_home:/var/jenkins_home
+    env:
+      JENKINS_OPTS="--prefix=/jenkins"
+
+
+- name: Install httpd
+  yum: name=httpd state=present
+
+- name: Configure httpd as proxy to jenkins
+  copy: src=jenkins.conf dest=/etc/httpd/conf.d mode=0644 owner=root group=root
+  notify:
+  - restart httpd
+
+- name: Enable and start httpd
+  service: name=httpd enabled=true state=started
+
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: Disable selinux
+  selinux: policy=targeted state=permissive

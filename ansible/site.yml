@@ -15,11 +15,11 @@
   tags:
   - nexus
 
-#- hosts: jenkins
-#  roles:
-#  - jenkins
-#  tags:
-#  - jenkins
+- hosts: jenkins
+  roles:
+  - jenkins
+  tags:
+  - jenkins
 
 #- hosts: gitlab
 #  roles:
