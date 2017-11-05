@@ -27,6 +27,14 @@ ansible_become=true
 ansible_become_method=sudo
 ansible_become_user=root
 
+[gitea]
+192.168.42.190
+
+[gitea:vars]
+ansible_user=centos
+ansible_become=true
+ansible_become_method=sudo
+ansible_become_user=root
 
 [gitlab]
 

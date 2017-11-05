@@ -1,0 +1,43 @@
+- name: Create directories to attach docker volumes
+  file: path=/var/lib/gitea/gitea_data state=directory mode=0777 owner=root group=root
+
+- name: Start gitea
+  docker:
+    name: gitea
+    image: gitea/gitea:1.2
+    state: started
+    restart_policy: always
+    ports: "127.0.0.1:3000:3000"
+    expose: 3000
+    volumes:
+      - /var/lib/gitea/gitea_data:/data
+
+# Add
+# ROOT_URL         = http://0.0.0.0/gitea/
+# after [server] if "^ROOT_URL" does not exists
+
+- name: Set ROOT_URL if not exists
+  lineinfile:
+    dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
+    regexp: '^ROOT_URL'
+    insertafter: '\[server\]'
+    line: 'ROOT_URL      = http://0.0.0.0/gitea/'
+  notify:
+    - restart gitea
+
+- name: Install httpd
+  yum: name=httpd state=present
+
+- name: Configure httpd as proxy to gitea
+  copy: src=gitea.conf dest=/etc/httpd/conf.d mode=0644 owner=root group=root
+  notify:
+  - restart httpd
+
+- name: Enable and start httpd
+  service: name=httpd enabled=true state=started
+
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: Disable selinux
+  selinux: policy=targeted state=permissive

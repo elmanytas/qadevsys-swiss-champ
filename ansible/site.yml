@@ -17,15 +17,23 @@
 
 - hosts: jenkins
   roles:
+  - docker-app-server
   - jenkins
   tags:
   - jenkins
 
-#- hosts: gitlab
-#  roles:
-#  - gitlab
-#  tags:
-#  - gitlab
+- hosts: gitea
+  roles:
+  - docker-app-server
+  - gitea
+  tags:
+  - gitea
+
+- hosts: gitlab
+  roles:
+  - gitlab
+  tags:
+  - gitlab
 
 #- hosts: taiga
 #  - docker-app-server
