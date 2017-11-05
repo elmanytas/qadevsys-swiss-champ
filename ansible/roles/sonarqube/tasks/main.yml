@@ -48,7 +48,7 @@
 - name: Install httpd
   yum: name=httpd state=present
 
-- name: Configure httpd as proxy to nexus
+- name: Configure httpd as proxy to sonarqube
   copy: src=sonarqube.conf dest=/etc/httpd/conf.d/sonarqube.conf mode=0644 owner=root group=root
   notify:
     - restart httpd

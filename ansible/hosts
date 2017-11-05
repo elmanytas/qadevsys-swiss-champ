@@ -8,6 +8,16 @@ ansible_become_method=sudo
 ansible_become_user=root
 
 
+[nexus]
+192.168.42.190
+
+[nexus:vars]
+ansible_user=centos
+ansible_become=true
+ansible_become_method=sudo
+ansible_become_user=root
+
+
 [jenkins]
 
 [jenkins:vars]
@@ -30,6 +40,7 @@ external_url=https://gitlab.qadevsys
 
 
 [nexus]
+192.168.42.190
 
 [nexus:vars]
 ansible_user=centos

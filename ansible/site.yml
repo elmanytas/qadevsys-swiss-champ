@@ -8,12 +8,12 @@
   tags:
   - sonarqube
 
-#- hosts: nexus
-#  roles:
-#  - docker-app-server
-#  - nexus
-#  tags:
-#  - nexus
+- hosts: nexus
+  roles:
+  - docker-app-server
+  - nexus
+  tags:
+  - nexus
 
 #- hosts: jenkins
 #  roles:
