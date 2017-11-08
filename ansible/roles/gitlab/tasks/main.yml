@@ -1,0 +1,38 @@
+- name: Create directories to attach docker volumes
+  file: path=/var/lib/gitlab/{{ item }} state=directory mode=0777 owner=root group=root
+  with_items:
+    - config
+    - logs
+    - data
+
+- name: Start gitlab
+  docker:
+    name: gitlab
+    image: gitlab/gitlab-ce
+    state: started
+    restart_policy: always
+    expose:
+      - 80
+      - 443
+    volumes:
+      - /var/lib/gitlab/config:/etc/gitlab
+      - /var/lib/gitlab/logs:/var/log/gitlab
+      - /var/lib/gitlab/data:/var/opt/gitlab
+
+
+- name: Install httpd
+  yum: name=httpd state=present
+
+- name: Configure httpd as proxy to gitlab
+  copy: src=gitlab.conf dest=/etc/httpd/conf.d/gitlab.conf mode=0644 owner=root group=root
+  notify:
+    - restart httpd
+
+- name: Enable and start httpd
+  service: name=httpd enabled=true state=started
+
+- name: Install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: Disable selinux
+  selinux: policy=targeted state=permissive

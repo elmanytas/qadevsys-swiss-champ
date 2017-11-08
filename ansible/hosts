@@ -37,6 +37,7 @@ ansible_become_method=sudo
 ansible_become_user=root
 
 [gitlab]
+192.168.42.190
 
 [gitlab:vars]
 ansible_user=centos
