@@ -1,3 +1,13 @@
+[all:children]
+sonarqube
+nexus
+jenkins
+gitea
+gitlab
+
+[all:vars]
+public_hostname=qadevsys
+
 [sonarqube]
 localhost
 
@@ -37,6 +47,7 @@ ansible_become_method=sudo
 ansible_become_user=root
 
 [gitlab]
+localhost
 
 [gitlab:vars]
 ansible_connection=local
@@ -46,12 +57,3 @@ ansible_become_user=root
 
 registry_external_url=https://registry.qadevsys
 external_url=https://gitlab.qadevsys
-
-
-[nexus]
-
-[nexus:vars]
-ansible_connection=local
-ansible_become=true
-ansible_become_method=sudo
-ansible_become_user=root

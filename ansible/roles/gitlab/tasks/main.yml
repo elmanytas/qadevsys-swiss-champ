@@ -22,6 +22,24 @@
       - /var/lib/gitlab/logs:/var/log/gitlab
       - /var/lib/gitlab/data:/var/opt/gitlab
 
+- name: Set external_url
+  lineinfile:
+    dest: "/var/lib/gitlab/config/gitlab.rb"
+    regexp: '^external_url'
+    insertafter: '# external_url'
+    line: "external_url 'http://{{ public_hostname }}/gitlab/'"
+  notify:
+    - restart gitlab
+
+- name: Set external_url
+  lineinfile:
+    dest: "/var/lib/gitlab/config/gitlab.rb"
+    regexp: '^external_url'
+    insertafter: '# external_url'
+    line: "external_url 'http://{{ ansible_default_ipv4.address }}/gitlab/'"
+  notify:
+    - restart gitlab
+  when: public_hostname == "none"
 
 - name: Install httpd
   yum: name=httpd state=present

@@ -21,10 +21,19 @@
     dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
     regexp: '^ROOT_URL'
     insertafter: '\[server\]'
-    line: 'ROOT_URL      = http://0.0.0.0/gitea/'
+    line: "ROOT_URL      = http://{{ public_hostname }}/gitea/"
   notify:
     - restart gitea
 
+- name: Set ROOT_URL if not exists
+  lineinfile:
+    dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
+    regexp: '^ROOT_URL'
+    insertafter: '\[server\]'
+    line: "ROOT_URL      = http://{{ ansible_default_ipv4.address }}/gitea/"
+  notify:
+    - restart gitea
+  when: public_hostname == "none"
 
 - name: Install httpd
   yum: name=httpd state=present
