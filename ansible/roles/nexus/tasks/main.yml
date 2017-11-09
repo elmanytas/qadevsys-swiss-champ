@@ -3,7 +3,14 @@
   file: path=/var/lib/nexus/sonatype-work state=directory mode=0777 owner=root group=root
 
 - name: Start dockerized nexus
-  docker: name=nexus image=sonatype/nexus state=started ports="127.0.0.1:8081:8081" expose=8081 volumes=/var/lib/nexus/sonatype-work:/sonatype-work restart_policy=always
+  docker_container:
+    name: nexus
+    image: sonatype/nexus
+    state: started
+    restart_policy: always
+    published_ports: "127.0.0.1:8081:8081"
+    volumes:
+      - /var/lib/nexus/sonatype-work:/sonatype-work
 
 
 - name: Install httpd
@@ -16,10 +23,3 @@
 
 - name: Enable and start httpd
   service: name=httpd enabled=true state=started
-
-
-- name: Install libselinux-python
-  yum: name=libselinux-python state=present
-
-- name: Disable selinux
-  selinux: policy=targeted state=permissive

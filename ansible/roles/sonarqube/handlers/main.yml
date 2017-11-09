@@ -2,5 +2,5 @@
 - name: restart httpd
   service: name=httpd state=restarted
 
-- name: restart docker
-  service: name=docker state=restarted
+- name: restart sonarqube
+  shell: docker restart sonarqube

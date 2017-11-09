@@ -1,14 +1,14 @@
+
 - name: Create directories to attach docker volumes
   file: path=/var/lib/gitea/gitea_data state=directory mode=0777 owner=root group=root
 
 - name: Start gitea
-  docker:
+  docker_container:
     name: gitea
     image: gitea/gitea:1.2
     state: started
     restart_policy: always
-    ports: "127.0.0.1:3000:3000"
-    expose: 3000
+    published_ports: "127.0.0.1:3000:3000"
     volumes:
       - /var/lib/gitea/gitea_data:/data
 
@@ -25,6 +25,7 @@
   notify:
     - restart gitea
 
+
 - name: Install httpd
   yum: name=httpd state=present
 
@@ -35,9 +36,3 @@
 
 - name: Enable and start httpd
   service: name=httpd enabled=true state=started
-
-- name: Install libselinux-python
-  yum: name=libselinux-python state=present
-
-- name: Disable selinux
-  selinux: policy=targeted state=permissive

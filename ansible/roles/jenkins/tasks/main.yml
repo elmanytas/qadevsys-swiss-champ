@@ -2,13 +2,12 @@
   file: path=/var/lib/jenkins/jenkins_home state=directory mode=0777 owner=root group=root
 
 - name: Start jenkins
-  docker:
+  docker_container:
     name: jenkins
     image: jenkins
     state: started
     restart_policy: always
-    ports: "127.0.0.1:8080:8080"
-    expose: 8080
+    published_ports: "127.0.0.1:8080:8080"
     volumes:
       - /var/lib/jenkins/jenkins_home:/var/jenkins_home
     env:
@@ -25,9 +24,3 @@
 
 - name: Enable and start httpd
   service: name=httpd enabled=true state=started
-
-- name: Install libselinux-python
-  yum: name=libselinux-python state=present
-
-- name: Disable selinux
-  selinux: policy=targeted state=permissive

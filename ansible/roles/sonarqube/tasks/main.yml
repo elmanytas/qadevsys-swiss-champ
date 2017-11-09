@@ -7,12 +7,11 @@
     - extensions
 
 - name: Start postgresql
-  docker:
+  docker_container:
     name: postgresql
     image: postgres
     state: started
     restart_policy: always
-    expose: 5432
     volumes:
       - /var/lib/sonarqube/postgresql:/var/lib/postgresql/data
     env:
@@ -22,16 +21,15 @@
 - name: Configure sonar context
   copy: src=sonar.properties dest=/var/lib/sonarqube/conf/sonar.properties mode=0644 owner=root group=root
   notify:
-    - restart docker
+    - restart sonarqube
 
 - name: Start dockerized sonarqube
-  docker:
+  docker_container:
     name: sonarqube
     image: sonarqube:6.6
     state: started
     restart_policy: always
-    ports: "127.0.0.1:9000:9000"
-    expose: 9000
+    published_ports: "127.0.0.1:9000:9000"
     volumes:
       - /var/lib/sonarqube/conf:/opt/sonarqube/conf
       - /var/lib/sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins
@@ -55,9 +53,3 @@
 
 - name: Enable and start httpd
   service: name=httpd enabled=true state=started
-
-- name: Install libselinux-python
-  yum: name=libselinux-python state=present
-
-- name: Disable selinux
-  selinux: policy=targeted state=permissive
