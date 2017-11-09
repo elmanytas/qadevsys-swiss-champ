@@ -1,0 +1,42 @@
+
+- name: Create directories to attach docker volumes
+  file: path=/var/lib/nginx/{{ item }} state=directory mode=0777 owner=root group=root
+  with_items:
+    - conf.d
+    - html
+
+- name: Start nginx
+  docker_container:
+    name: nginx
+    image: nginx
+    state: started
+    restart_policy: always
+    published_ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/lib/nginx/conf.d:/etc/nginx/conf.d
+      - /var/lib/nginx/html:/usr/share/nginx/html
+
+# Add
+# ROOT_URL         = http://0.0.0.0/gitea/
+# after [server] if "^ROOT_URL" does not exists
+
+- name: Build certificate
+  lineinfile:
+    dest: "/var/lib/nginx/nginx_conf/app.ini"
+    regexp: '^ROOT_URL'
+    insertafter: '\[server\]'
+    line: "ROOT_URL      = http://{{ public_hostname }}/gitea/"
+  notify:
+    - restart gitea
+
+- name: Build certificate
+  lineinfile:
+    dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
+    regexp: '^ROOT_URL'
+    insertafter: '\[server\]'
+    line: "ROOT_URL      = http://{{ ansible_default_ipv4.address }}/gitea/"
+  notify:
+    - restart gitea
+  when: public_hostname == "none"
