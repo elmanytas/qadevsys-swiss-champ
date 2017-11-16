@@ -14,13 +14,13 @@
       JENKINS_OPTS="--prefix=/jenkins"
 
 
-- name: Install httpd
-  yum: name=httpd state=present
+#- name: Install httpd
+#  yum: name=httpd state=present
 
-- name: Configure httpd as proxy to jenkins
-  copy: src=jenkins.conf dest=/etc/httpd/conf.d mode=0644 owner=root group=root
-  notify:
-  - restart httpd
+#- name: Configure httpd as proxy to jenkins
+#  copy: src=jenkins.conf dest=/etc/httpd/conf.d mode=0644 owner=root group=root
+#  notify:
+#  - restart httpd
 
-- name: Enable and start httpd
-  service: name=httpd enabled=true state=started
+#- name: Enable and start httpd
+#  service: name=httpd enabled=true state=started

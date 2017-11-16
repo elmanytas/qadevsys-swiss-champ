@@ -41,3 +41,9 @@
 #  - taiga
 #  tags:
 #  - taiga
+
+- hosts: nginx
+  roles:
+  - nginx
+  tags:
+  - nginx

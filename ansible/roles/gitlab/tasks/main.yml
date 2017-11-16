@@ -22,6 +22,10 @@
       - /var/lib/gitlab/logs:/var/log/gitlab
       - /var/lib/gitlab/data:/var/opt/gitlab
 
+- name: Wait until the gitlab config is present before continuing
+  wait_for:
+    path: /var/lib/gitlab/config/gitlab.rb
+
 - name: Set external_url
   lineinfile:
     dest: "/var/lib/gitlab/config/gitlab.rb"
@@ -41,13 +45,13 @@
     - restart gitlab
   when: public_hostname == "none"
 
-- name: Install httpd
-  yum: name=httpd state=present
+#- name: Install httpd
+#  yum: name=httpd state=present
 
-- name: Configure httpd as proxy to gitlab
-  copy: src=gitlab.conf dest=/etc/httpd/conf.d/gitlab.conf mode=0644 owner=root group=root
-  notify:
-    - restart httpd
+#- name: Configure httpd as proxy to gitlab
+#  copy: src=gitlab.conf dest=/etc/httpd/conf.d/gitlab.conf mode=0644 owner=root group=root
+#  notify:
+#    - restart httpd
 
-- name: Enable and start httpd
-  service: name=httpd enabled=true state=started
+#- name: Enable and start httpd
+#  service: name=httpd enabled=true state=started

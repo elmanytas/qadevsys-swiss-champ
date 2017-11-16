@@ -13,13 +13,13 @@
       - /var/lib/nexus/sonatype-work:/sonatype-work
 
 
-- name: Install httpd
-  yum: name=httpd state=present
+#- name: Install httpd
+#  yum: name=httpd state=present
 
-- name: Configure httpd as proxy to nexus
-  copy: src=nexus.conf dest=/etc/httpd/conf.d/nexus.conf mode=0644 owner=root group=root
-  notify:
-  - restart httpd
+#- name: Configure httpd as proxy to nexus
+#  copy: src=nexus.conf dest=/etc/httpd/conf.d/nexus.conf mode=0644 owner=root group=root
+#  notify:
+#  - restart httpd
 
-- name: Enable and start httpd
-  service: name=httpd enabled=true state=started
+#- name: Enable and start httpd
+#  service: name=httpd enabled=true state=started

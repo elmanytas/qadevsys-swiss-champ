@@ -57,3 +57,12 @@ ansible_become_user=root
 
 registry_external_url=https://registry.qadevsys
 external_url=https://gitlab.qadevsys
+
+[nginx]
+localhost
+
+[nginx:vars]
+ansible_connection=local
+ansible_become=true
+ansible_become_method=sudo
+ansible_become_user=root
