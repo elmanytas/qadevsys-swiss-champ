@@ -1,14 +1,25 @@
 - name: Install docker
+  apt: name=docker.io state=present
+  with_items:
+    - docker.io
+    - python-docker
+  when: ansible_distribution == 'Ubuntu'
+
+- name: Install docker
   yum: name={{ item }} state=present
   with_items:
   - docker
   - docker-python
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Enable and start docker
   service: name=docker enabled=true state=started
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Install libselinux-python
   yum: name=libselinux-python state=present
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
 
 - name: Disable selinux
   selinux: policy=targeted state=permissive
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
