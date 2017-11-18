@@ -17,6 +17,8 @@
     volumes:
       - /var/lib/nginx/conf.d:/etc/nginx/conf.d
       - /var/lib/nginx/html:/usr/share/nginx/html
+    links:
+     - "gitea:gitea"
 
 - name: Configure nginx
   template:
