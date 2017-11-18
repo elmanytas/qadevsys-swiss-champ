@@ -17,3 +17,25 @@
     volumes:
       - /var/lib/nginx/conf.d:/etc/nginx/conf.d
       - /var/lib/nginx/html:/usr/share/nginx/html
+
+- name: Configure nginx
+  template:
+    src: atsc.conf.j2
+    dest: /var/lib/nginx/conf.d/atsc.conf.j2
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  notify:
+    - restart nginx
+
+- name: Configure homepage
+  copy:
+    src: index.html
+    dest: /var/lib/nginx/html/index.html
+    mode: 0644
+    owner: root
+    group: root
+    backup: yes
+  notify:
+    - restart nginx
