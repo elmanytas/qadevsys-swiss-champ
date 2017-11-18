@@ -8,7 +8,7 @@
     image: sonatype/nexus
     state: started
     restart_policy: always
-    published_ports: "127.0.0.1:8081:8081"
+#    published_ports: "127.0.0.1:8081:8081"
     volumes:
       - /var/lib/nexus/sonatype-work:/sonatype-work
 

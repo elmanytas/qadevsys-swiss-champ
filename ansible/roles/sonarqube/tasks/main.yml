@@ -29,7 +29,7 @@
     image: sonarqube:6.6
     state: started
     restart_policy: always
-    published_ports: "127.0.0.1:9000:9000"
+#    published_ports: "127.0.0.1:9000:9000"
     volumes:
       - /var/lib/sonarqube/conf:/opt/sonarqube/conf
       - /var/lib/sonarqube/plugins:/opt/sonarqube/lib/bundled-plugins

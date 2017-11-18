@@ -19,11 +19,15 @@
       - /var/lib/nginx/html:/usr/share/nginx/html
     links:
      - "gitea:gitea"
+     - "gitlab:gitlab"
+     - "jenkins:jenkins"
+     - "nexus:nexus"
+     - "sonarqube:sonarqube"
 
 - name: Configure nginx
   template:
     src: atsc.conf.j2
-    dest: /var/lib/nginx/conf.d/atsc.conf.j2
+    dest: /var/lib/nginx/conf.d/atsc.conf
     mode: 0644
     owner: root
     group: root

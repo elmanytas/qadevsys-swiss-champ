@@ -6,7 +6,7 @@ gitea
 gitlab
 
 [all:vars]
-public_hostname=qadevsys
+public_hostname=yinyan.ferrergarcia.es
 
 [sonarqube]
 localhost

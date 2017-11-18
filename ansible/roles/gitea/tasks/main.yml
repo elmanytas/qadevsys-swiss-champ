@@ -5,10 +5,10 @@
 - name: Start gitea
   docker_container:
     name: gitea
-    image: gitea/gitea:1.2
+    image: gitea/gitea:1.0
     state: started
     restart_policy: always
-    published_ports: "127.0.0.1:3000:3000"
+    #published_ports: "127.0.0.1:3000:3000"
     volumes:
       - /var/lib/gitea/gitea_data:/data
 
@@ -19,7 +19,7 @@
 - name: Set ROOT_URL if not exists
   lineinfile:
     dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
-    regexp: '^ROOT_URL'
+    regexp: "^ROOT_URL"
     insertafter: '\[server\]'
     line: "ROOT_URL      = http://{{ public_hostname }}/gitea/"
   notify:
@@ -28,7 +28,7 @@
 - name: Set ROOT_URL if not exists
   lineinfile:
     dest: "/var/lib/gitea/gitea_data/gitea/conf/app.ini"
-    regexp: '^ROOT_URL'
+    regexp: "^ROOT_URL"
     insertafter: '\[server\]'
     line: "ROOT_URL      = http://{{ ansible_default_ipv4.address }}/gitea/"
   notify:

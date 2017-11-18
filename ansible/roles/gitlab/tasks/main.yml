@@ -11,12 +11,12 @@
     image: gitlab/gitlab-ce
     state: started
     restart_policy: always
-    published_ports:
-      - 127.0.0.1:9080:80
-      - 127.0.0.1:9443:443
-    expose:
-      - 80
-      - 443
+#    published_ports:
+#      - 127.0.0.1:9080:80
+#      - 127.0.0.1:9443:443
+#    expose:
+#      - 80
+#      - 443
     volumes:
       - /var/lib/gitlab/config:/etc/gitlab
       - /var/lib/gitlab/logs:/var/log/gitlab
