@@ -18,11 +18,11 @@
       - /var/lib/nginx/conf.d:/etc/nginx/conf.d
       - /var/lib/nginx/html:/usr/share/nginx/html
     links:
-     - "gitea:gitea"
      - "gitlab:gitlab"
      - "jenkins:jenkins"
      - "nexus:nexus"
      - "sonarqube:sonarqube"
+#     - "gitea:gitea"
 
 - name: Configure nginx
   template:

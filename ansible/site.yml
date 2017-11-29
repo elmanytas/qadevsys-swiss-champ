@@ -22,12 +22,12 @@
   tags:
   - jenkins
 
-- hosts: gitea
-  roles:
-  - docker-app-server
-  - gitea
-  tags:
-  - gitea
+#- hosts: gitea
+#  roles:
+#  - docker-app-server
+#  - gitea
+#  tags:
+#  - gitea
 
 - hosts: gitlab
   roles:
