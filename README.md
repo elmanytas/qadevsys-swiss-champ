@@ -37,3 +37,46 @@ It is an artifact repository.
 ## Taiga
 It is a scrum tool that integrates with Gitea and Github (https://tree.taiga.io/support/integrations/webhooks/).
 
+# Used resources
+jmferrerm@serenity:~$ free
+              total        used        free      shared  buff/cache   available
+Memoria:    16317664    12681772      374456      691960     3261436     2402988
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop gitlab
+free -m
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        6813        5863         701        3258        7893
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop nexus
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        6275        6394         701        3264        8431
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop jenkins
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        4767        7897         700        3269        9940
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop sonarqube
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        2872        9793         700        3269       11837
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop postgresql
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        2868        9809         687        3256       11854
+Swap:             0           0           0
+jmferrerm@serenity:~$ docker stop nginx
+^C
+jmferrerm@serenity:~$ free -m
+              total        used        free      shared  buff/cache   available
+Memoria:       15935        2852        9821         687        3261       11870
+Swap:             0           0           0
+jmferrerm@serenity:~$
